@@ -19,3 +19,4 @@ Things you may want to cover:
   - yarn add bootstrap jquery popper.js
   - run rails webpacker:install
   - run rails assets:precompile
+  - run rails db:seed
