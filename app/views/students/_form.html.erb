@@ -1,0 +1,64 @@
+<%= form_for(:student,:as => @student, :url => students_path(@student) ) do |f| %>
+  <div class="form-row">
+    <div class="col">
+      <%= f.text_field :first_name, class: "form-control", placeholder: "First Name*"%>
+      <span id="first_name_err" style="color: red"></span>
+    </div>
+    <div class="col">
+      <%= f.text_field :last_name, class: "form-control", placeholder: "Last Name*"%>
+      <span id="last_name_err" style="color: red"></span>
+    </div>
+  </div>
+  <br>
+  <div>
+    <%= render 'subject_marks'%>
+  </div>
+  <div class="add_subject">
+    
+  </div>
+  <button id="add_sub">Add</button>
+  <br>
+  <div class="form-row ">
+    <div class="col pull-right">
+      <%= f.submit "Save", class: "btn btn-primary save_form"%>
+      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+    </div>
+  </div>
+<% end %>
+
+<script type="text/javascript">
+  $("#add_sub").on('click',function(){
+    console.log("test ")
+    $(".add_subject").append("<%= escape_javascript("#{render :partial => 'subject_marks'}").html_safe %>")
+    return false;
+  })
+
+
+  $(".save_form").on('click',function(){
+    var first_name = $("#student_first_name").val()
+    var last_name = $("#student_last_name").val()
+    var first_name_error = (first_name == '' || first_name == undefined || first_name == null)
+    var last_name_error = (last_name == '' || last_name == undefined || last_name == null)
+    if(first_name_error && last_name_error){
+      $("#first_name_err").text("Please enter first name")
+      $("#last_name_err").text("Please enter last name")
+      return false;
+    }
+    else if(first_name == '' || first_name == undefined || first_name == null){
+      $("#first_name_err").text("Please enter first name")
+      $("#last_name_err").text("")
+      return false;
+    }
+    else if(last_name == '' || last_name == undefined || last_name == null){
+      $("#last_name_err").text("Please enter last name")
+      $("#first_name_err").text("")
+      return false;
+    }else{
+      $("#first_name_err").text("")
+      $("#last_name_err").text("")
+      return true;
+    }
+  })
+
+</script>
+

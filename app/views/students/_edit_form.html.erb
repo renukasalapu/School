@@ -1,0 +1,75 @@
+<%= form_for(:student,:as => @student, :url => student_path(@student), method: :put ) do |f| %>
+  <div class="form-row">
+    <div class="col">
+      <%= f.hidden_field :id%>
+      <%= f.text_field :first_name,id: "f_name", class: "form-control", placeholder: "First Name*"%>
+      <span id="f_err" style="color: red"></span>
+    </div>
+    <div class="col">
+      <%= f.text_field :last_name,id: "l_name", class: "form-control", placeholder: "Last Name*"%>
+      <span id="l_err" style="color: red"></span>
+    </div>
+  </div>
+  <br>
+  <% if @student.student_marks.present? %>
+  <% @student.student_marks.each do |s|%>
+      <div class="form-row">
+        <div class="col">
+          <%= select_tag "subjects[][subject_id]", options_for_select(@subjects.collect{ |u| [u.subject_name, u.id]},s.subject_id), class: "form-control"%>
+        </div>
+        <div class="col">
+          <%= text_field_tag "subjects[][marks]", s.marks, class: "form-control", placeholder: "Marks", multiple: true%>
+        </div>
+    </div>
+    <br>
+    <% end %>
+  <% end %>
+  <div id="add_subject_edit_<%=@student.id%>">
+    
+  </div>
+  <br>
+  <button id="edit_sub_<%=@student.id%>" class="btn btn-primary">Add</button>
+  
+  <div class="form-row ">
+    <div class="col pull-right">
+      <%= f.submit "Save", class: "btn btn-primary update_form"%>
+      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+    </div>
+  </div>
+<% end %>
+
+<script type="text/javascript">
+  value = $("#student_id").val()
+  sub_val = "#add_subject_edit_"+value
+  edit_val = "#edit_sub_"+value
+  $(edit_val).on('click',function(){
+    $(sub_val).append("<%= escape_javascript("#{render :partial => 'subject_marks'}").html_safe %>")
+    return false;
+  })
+
+  $(".update_form").on('click',function(){
+    var first_name = $("#f_name").val()
+    var last_name = $("#l_name").val()
+    var first_name_error = (first_name == '' || first_name == undefined || first_name == null)
+    var last_name_error = (last_name == '' || last_name == undefined || last_name == null)
+    if(first_name_error && last_name_error){
+      $("#first_name_err").text("Please enter first name")
+      $("#last_name_err").text("Please enter last name")
+      return false;
+    }
+    else if(first_name == '' || first_name == undefined || first_name == null){
+      $("#f_err").text("Please enter first name")
+      $("#l_err").text("")
+      return false;
+    }
+    else if(last_name == '' || last_name == undefined || last_name == null){
+      $("#l_err").text("Please enter last name")
+      $("#f_err").text("")
+      return false;
+    }else{
+      $("#f_err").text("")
+      $("#l_err").text("")
+      return true;
+    }
+  })
+</script>

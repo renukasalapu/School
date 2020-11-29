@@ -1,0 +1,99 @@
+<div class="container">
+  <%= render './layouts/header'%>
+  <div class="container">
+    <br>
+    <div class="card">
+      <div class="card-body">
+        <h3 class="card-title" align="center">Student Details
+
+        </h3>
+        <!-- <hr> -->
+        <% if  @students.present? %>
+          <div class="table-responsive">
+            <table class="table">
+              <thead class="thead-light">
+                <tr>
+                  <th scope="col">First Name</th>
+                  <th scope="col">Last Name</th>
+                  <th scope="col">Total Marks</th>
+                  <th>
+                    <span class="col-sm-2 pull-right">
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#StudentForm">
+                      New Student
+                    </button>
+                    <!-- Modal -->
+                    <div class="modal fade" id="StudentForm" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                      aria-hidden="true">
+                      <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Student Form</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+                          <div class="modal-body">
+                            <%= render 'form', locals: {:student => nil}%>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </span>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <% @students.each do |student|%>
+                  <tr>
+                    <td scope="col"><%= student.first_name %></td>
+                    <td scope="col"><%= student.last_name %></td>
+                    <td scope="col"><%= student.get_total_marks rescue '-' %></td>
+                    <td>
+                      <%= link_to 'View', student_path(student), class: "btn btn-primary" %>
+                      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#edit_form_<%= student.id %>" value="<%=student.id%>">
+                      Edit
+                    </button>
+
+                    <div class="modal fade" id="edit_form_<%= student.id %>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                      <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Edit Form</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+                          <div class="modal-body">
+                            <%@student = student%>
+                            
+                            <%= render partial: 'edit_form', locals: {:student => @student} %>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    </div>
+                    <%= link_to 'Delete', student , method: :delete, data: {confirm: "Are you sure?"}, class: "btn btn-primary"%>
+                    </td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+        <% else %>
+          <div class="alert alert-primary" role="alert">
+            No students to display
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+
+<br>
+<div class="container">
+  <%= pagy_bootstrap_nav(@pagy).html_safe %>
+</div>
+</div>
+
+
+

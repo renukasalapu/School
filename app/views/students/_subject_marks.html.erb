@@ -1,0 +1,9 @@
+<div class="form-row">
+	<div class="col">
+	  <%= select_tag "subjects[][subject_id]", options_for_select(@subjects.collect{ |u| [u.subject_name, u.id] }), class: "form-control"%>
+	</div>
+	<div class="col">
+	  <%= text_field_tag "subjects[][marks]", '', class: "form-control", placeholder: "Marks", multiple: true%>
+	</div>
+</div>
+<br>

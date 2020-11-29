@@ -1,0 +1,39 @@
+<div class="container">
+  <%= render './layouts/header'%>
+  <br>
+  <div class="container">
+  	<div class="card">
+  <div class="card-body">
+    <h5 class="card-title">Student Details</h5>
+    <hr>
+    <p class="card-text">First Name : <%= @student.first_name%></p>
+    <p class="card-text">Last Name : <%= @student.last_name%></p>
+    
+    <div class="table-responsive">
+      <table class="table table-bordered">
+        <thead class="thead-light">
+        	<tr>
+        		<td colspan="3", align="center"> 
+        			<b> Subject Details </b>
+        		</td>
+        	</tr>
+        	<tr>
+        		<th>Subject Name</th>	
+        		<th>Marks</th>	
+        	</tr>
+        </thead>
+        <tbody>
+        	<% @student.student_marks.each do |subject| %>
+          	<tr>
+          		<td><%= subject.subject.subject_name %></td>	
+          		<td><%= subject.marks %></td>	
+          	</tr>
+        	<% end %>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+</div>
+  </div>
+</div>

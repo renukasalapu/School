@@ -1,0 +1,44 @@
+<div class="container">
+  <div class="row mgTp">
+    <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: {class: "col-md-6 offset-md-3"}) do |f| %>
+      <h3 class="title">Login</h3>
+      <hr class="divisor">
+      <div class="form-group">
+        <label for="exampleInputEmail1">Email</label>
+        <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control" %>
+      </div>
+      <div class="form-group">
+        <label for="exampleInputPassword1">Password</label>
+        <%= f.password_field :password, autocomplete: "current-password", class: "form-control" %>
+      </div>
+      <%= f.submit "Log in", class: "btn btn-primary topBtn" %>
+  	<% end %>
+  </div>
+</div>
+
+<style type="text/css">
+  .title{
+  	color:#007bff;
+	}
+
+	.mgTp{
+	  margin-top:10%;
+	}
+
+	.topBtn{
+    margin-top:15px;
+	}
+
+	::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: #007bff !important;
+    opacity: 1; /* Firefox */
+	}
+
+	:-ms-input-placeholder { /* Internet Explorer 10-11 */
+    color: #007bff !important;
+	}
+
+	::-ms-input-placeholder { /* Microsoft Edge */
+    color: #007bff !important;
+	}
+</style>
